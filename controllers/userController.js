@@ -18,3 +18,16 @@ exports.signup = async (req, res,next) => {
     }
 };
 
+exports.login = async (req, res) => {
+    try{
+        const {email,password} = req.body;
+        const user = await User.findOne({where:{email,password}});
+        if(!user){
+            return res.status(401).json({message:"Invalid Credentials"});
+        }
+        return res.status(200).json({message:"Login Successful",user});
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({message:"Internal Server Error"});
+    }
+};
