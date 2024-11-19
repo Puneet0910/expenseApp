@@ -1,16 +1,16 @@
-const expess = require("express");
+const express = require("express");
 const cors = require("cors");
-const app = expess();
-const userController = require("./controllers/userController");
+const app = express();
+const expensesRoute = require("./routers/expenseRoute");
 const userRoute = require("./routers/userRoute");
-app.use(expess.json());
-app.use(expess.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 const sequelize = require("./util/database");
 
 app.use("/user", userRoute);
-
+app.use("/expense", expensesRoute);
 sequelize
   .sync()
   .then(() => {
